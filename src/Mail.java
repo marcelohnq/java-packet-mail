@@ -8,19 +8,14 @@ public class Mail {
 
 	public void send(String subject, String text) {
 		Email email = EmailBuilder.startingBlank()
-			    .from("Monitor", "marcelohnqpl@gmail.com")
-			    .to("Marcelo", "henrick939@gmail.com")
+			    .from("Monitor", "from-email@gmail.com")
+			    .to("Marcelo", "to-email@gmail.com")
 			    .withSubject(subject)
 			    .withPlainText(text)
 			    .buildEmail();
-
-//		MailerBuilder
-//		.withSMTPServer("smtp.host.com", 25, "marcelohnqpl@gmail.com", "Disquee8070102@hH")
-//		  .buildMailer()
-//		  .sendMail(email);
 		
 		Mailer mailer = MailerBuilder
-		          .withSMTPServer("smtp.gmail.com", 465, "marcelohnqpl@gmail.com", "Disquee8070102@hH")
+		          .withSMTPServer("smtp.gmail.com", 465, "from-email@gmail.com", "password")
 		          .withTransportStrategy(TransportStrategy.SMTPS)		          
 		          .withSessionTimeout(10 * 1000)
 		          .clearEmailAddressCriteria() // turns off email validation
