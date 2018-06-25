@@ -18,7 +18,7 @@ public class Monitor {
 			return;
 		}
 
-		PcapIf device = alldevs.get(6); // Get first device in list
+		PcapIf device = alldevs.get(REDELOCAL_DEVICE); // Get first device in list
 
 		int snaplen = 64 * 1024; // Capture all packets, no trucation
 		int flags = Pcap.MODE_PROMISCUOUS; // capture all packets
@@ -56,7 +56,11 @@ public class Monitor {
 						System.out.println(s);
 						System.out.println(d);
 
-						Monitor.alerta(tcp.destination());
+						if (!destIP.equals(IP_SERVIDOR_SEGURO)) {
+							Monitor.alerta(destIP);
+						} else {
+							Monitor.alerta(tcp.destination()+"");
+						}												
 					}
 				}
 			}
@@ -67,7 +71,7 @@ public class Monitor {
 		pcap.close();
 	}
 
-	public static void alerta(int alerta) {
+	PRECISA SER TESTADO:public static void alerta(int alerta) {
 
 		String subject = "[Alerta] Acesso a porta " + alerta;
 		String text = "";
@@ -78,13 +82,12 @@ public class Monitor {
 			break;
 		case 631:
 			text = "Verificou-se acesso a porta 3306 [conexão ao banco de dados MySQL errônea], há um grande possibilidade de tentativa de ataque ao servidor";
-			break;
-		case 8084:
+			break;	
+				
+		default: //Caso não seja o ip seguro
 			subject = "[Alerta] Máquina NÃO segura [IP: " + alerta + "]";
 			text = "Verificou-se acesso de uma máquina NÃO segura, há um grande possibilidade de tentativa de ataque ao servidor";
-			break;
-		default:
-			break;
+			break;			
 		}
 
 		new Mail().send(subject, text);
