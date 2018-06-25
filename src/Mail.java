@@ -9,7 +9,7 @@ public class Mail {
 	public void send(String subject, String text) {
 		Email email = EmailBuilder.startingBlank()
 			    .from("Monitor", "from-email@gmail.com")
-			    .to("Marcelo", "to-email@gmail.com")
+			    .to("Admin", "to-email@gmail.com")
 			    .withSubject(subject)
 			    .withPlainText(text)
 			    .buildEmail();
